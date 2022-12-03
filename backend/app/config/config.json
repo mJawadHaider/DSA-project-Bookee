@@ -1,0 +1,56 @@
+{
+    "specialization": {},
+    "middleware": {
+        "static": {
+            "module": {
+                "arguments": [
+                    "path:./../public"
+                ]
+            }
+        },
+        "router": {
+            "module": {
+                "arguments": [
+                    {
+                        "directory": "path:./controllers"
+                    }
+                ]
+            }
+        },
+        "skip-auth": {
+            "enabled": true,
+            "priority": 10,
+            "module": {
+                "name": "path:./middlewares/skip-auth"
+            }
+        },
+        "authentication": {
+            "enabled": true,
+            "priority": 15,
+            "module": {
+                "name": "path:./middlewares/auth"
+            }
+        },
+        "is-admin": {
+            "enabled": true,
+            "priority": 20,
+            "route": "/api",
+            "module": {
+                "name": "path:./middlewares/is-admin"
+            }
+        },
+        "pagination": {
+            "enabled": true,
+            "priority": 25,
+            "route": "/api",
+            "module": {
+                "name": "path:./middlewares/pagination"
+            }
+        }
+    },
+    "app": {
+        "regex": {
+            "alphanumericWithAtLeastOneNumber": "(((?![a-zA-Z]+$)[a-zA-Z0-9]+$))"
+        }
+    }
+}

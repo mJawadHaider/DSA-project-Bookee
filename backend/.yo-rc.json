@@ -1,0 +1,12 @@
+{
+  "generator-varnode": {
+    "promptValues": {
+      "description": "grocery app to make grocery shop easier to any store",
+      "db": "Sequelize",
+      "isCorsEnable": true,
+      "isCustomizeResponseAppenderEnable": true,
+      "isSocketIoEnable": true,
+      "frontend": "None"
+    }
+  }
+}
