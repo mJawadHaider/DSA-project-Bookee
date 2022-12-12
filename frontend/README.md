@@ -1,4 +1,4 @@
-# bookee-frontend
+# frontend
 
 ## Project setup
 ```
