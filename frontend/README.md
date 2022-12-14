@@ -22,3 +22,8 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+
+### COLOR COMBINATIONS
+off-white #FBECD5
+light-brown #DABDAB
