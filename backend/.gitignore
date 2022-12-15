@@ -1,6 +1,6 @@
 node_modules
 
-/app/config/database.development.js
+/app/config/database.js
 .idea/
 
 .DS_Store
@@ -9,9 +9,9 @@ node_modules
 
 
 # local env files
+.env
 .env.local
 .env.*.local
-.env
 
 # Log files
 npm-debug.log*
