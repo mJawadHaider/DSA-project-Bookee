@@ -1,5 +1,5 @@
 {
-  "name": "nrts",
+  "name": "bookee",
   "version": "0.1.0",
   "description": "app for pick and drop",
   "main": "./app/index.js",
@@ -12,7 +12,7 @@
     "build": "vue-cli-service build --mode production",
     "lint": "vue-cli-service lint",
     "start": "node ./app/server.js | bunyan --output short --color",
-    "nrts-backend": "nodemon ./app/server.js | bunyan --output short --color",
+    "server-start": "nodemon ./app/server.js | bunyan --output short --color",
     "client-start": "vue-cli-service serve",
     "dev-start": "concurrently --kill-others \"npm run server-start\" \"npm run client-start\"",
     "win-server-start": "SET NODE_ENV=development && nodemon ./app/server.js | bunyan --output short --color",
