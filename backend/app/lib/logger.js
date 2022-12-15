@@ -1,6 +1,6 @@
 const bunyan = require('bunyan');
 
 module.exports = bunyan.createLogger({
-    'name': 'nrts',
+    'name': 'bookee',
     'level': 10,
 });

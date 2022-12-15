@@ -1,149 +1,84 @@
 <template>
-  <v-container>
-    <v-row class="text-center">
+  <div class="bg">
+    <v-row class="justify-center">
       <v-col cols="12">
-        <v-img
-          :src="require('../assets/logo.svg')"
-          class="my-3"
-          contain
-          height="200"
-        />
+        <v-img :src="require('../assets/logo.svg')" class="my-3" contain height="150" />
       </v-col>
 
-      <v-col class="mb-4">
-        <h1 class="display-2 font-weight-bold mb-3">
-          Welcome to the Vuetify 3 Beta
-        </h1>
-
-
-        <p class="subheading font-weight-regular">
-          For help and collaboration with other Vuetify developers,
-          <br>please join our online
-          <a
-            href="https://community.vuetifyjs.com"
-            target="_blank"
-          >Discord Community</a>
-        </p>
-      </v-col>
-
-      <v-col
-        class="mb-5"
-        cols="12"
-      >
-        <h2 class="headline font-weight-bold mb-5">
-          What's next?
-        </h2>
-
-        <v-row justify="center">
-          <a
-            v-for="(next, i) in whatsNext"
-            :key="i"
-            :href="next.href"
-            class="subheading mx-3"
-            target="_blank"
-          >
-            {{ next.text }}
-          </a>
-        </v-row>
-      </v-col>
-
-      <v-col
-        class="mb-5"
-        cols="12"
-      >
-        <h2 class="headline font-weight-bold mb-5">
-          Important Links
-        </h2>
-
-        <v-row justify="center">
-          <a
-            v-for="(link, i) in importantLinks"
-            :key="i"
-            :href="link.href"
-            class="subheading mx-3"
-            target="_blank"
-          >
-            {{ link.text }}
-          </a>
-        </v-row>
-      </v-col>
-
-      <v-col
-        class="mb-5"
-        cols="12"
-      >
-        <h2 class="headline font-weight-bold mb-5">
-          Ecosystem
-        </h2>
-
-        <v-row justify="center">
-          <a
-            v-for="(eco, i) in ecosystem"
-            :key="i"
-            :href="eco.href"
-            class="subheading mx-3"
-            target="_blank"
-          >
-            {{ eco.text }}
-          </a>
-        </v-row>
-      </v-col>
+      <v-row class="text-center">
+        <v-col cols="12" md="12">
+          <h3 class="font-italic">
+            Welcome to Bookee. Let's read, as reading heals!
+          </h3> 
+        </v-col>
+          <!-- <v-btn rounded color="brown" dark elevation="10" class="font-weight-black">
+            Click Here To Sign Up
+          </v-btn> -->
+      </v-row>
     </v-row>
-  </v-container>
+    <v-row class="mt-8 justify-center">
+      <v-card  width="35%" color="#EFEBE9" elevation="7">
+        <v-col cols="12" md="12" sm="12" class="pt-3 white">
+          <v-text-field
+            v-model="user.email"
+            placeholder="Enter Email"
+            :required=[true]
+          />
+        </v-col>
+        <v-col cols="12" md="12" sm="12" class="py-0">
+          <v-text-field
+            v-model="user.password"
+            placeholder="Enter Password"
+            :required=[true]
+          />
+        </v-col>
+        <v-col cols="12" md="12" sm="12" class="pa-0 text-end">
+          <u class="ma-3">Forgot Password? Click Here</u>
+        </v-col>
+        <v-col cols="12" md="12" sm="12" class="text-end">
+          <v-btn color="#DABDAB">Sign In</v-btn>
+        </v-col>
+        <v-row class="d-flex align-center">
+          <v-col class="text-end" cols="6">Did not register yet?</v-col>
+          <v-col class="mb-1 pl-0" cols="6">
+            <v-btn
+              variant="outlined"
+              color="brown"
+              class="ml-0"
+            >
+              Register Now
+            </v-btn>
+          </v-col>
+        </v-row>
+      </v-card >
+    </v-row>
+  <v-footer>
+    <v-card width="100%" color="brown" height="40px" class="d-flex align-center justify-center">
+      &copy; 2022 Bookee - All Rights Reserved
+    </v-card>
+  </v-footer>
+  </div>
 </template>
-
 <script>
 
 export default {
-  name: 'HelloWorld',
+  name: 'Home-Page',
+
+  components: {
+  },
 
   data: () => ({
-    ecosystem: [
-      {
-        text: 'vuetify-loader',
-        href: 'https://github.com/vuetifyjs/vuetify-loader/tree/next',
-      },
-      {
-        text: 'github',
-        href: 'https://github.com/vuetifyjs/vuetify/tree/next',
-      },
-      {
-        text: 'awesome-vuetify',
-        href: 'https://github.com/vuetifyjs/awesome-vuetify',
-      },
-    ],
-    importantLinks: [
-      {
-        text: 'Chat',
-        href: 'https://community.vuetifyjs.com',
-      },
-      {
-        text: 'Made with Vuetify',
-        href: 'https://madewithvuejs.com/vuetify',
-      },
-      {
-        text: 'Twitter',
-        href: 'https://twitter.com/vuetifyjs',
-      },
-      {
-        text: 'Articles',
-        href: 'https://medium.com/vuetify',
-      },
-    ],
-    whatsNext: [
-      {
-        text: 'Explore components',
-        href: 'https://vuetifyjs.com',
-      },
-      {
-        text: 'Roadmap',
-        href: 'https://vuetifyjs.com/introduction/roadmap/',
-      },
-      {
-        text: 'Frequently Asked Questions',
-        href: 'https://vuetifyjs.com/getting-started/frequently-asked-questions',
-      },
-    ],
+    user: {
+      email: 'admin@gmail.com',
+      password: 'admin123',
+    }
   }),
 }
 </script>
+<style scoped>
+.bg {
+  background: url('../assets/background_new.svg');
+  background-size: 100%;
+  height: 100%;
+}
+</style>
