@@ -1,34 +1,34 @@
 module.exports.Validations = {
   CNIC: {
-    Format: "XXXXX-XXXXXXX-X",
+    Format: 'XXXXX-XXXXXXX-X',
     Regex: /^\d{5}-\d{7}-\d{1}$/,
   },
   PhoneNumber: {
-    Format: "XX-XXXXXXXXXX",
+    Format: 'XX-XXXXXXXXXX',
     Regex: /^\d\d-\d{10}$/,
   },
 };
 
 module.exports.CRUD = {
-  Created: "created",
-  Deleted: "deleted",
-  Read: "read",
-  Updated: "updated",
+  Created: 'created',
+  Deleted: 'deleted',
+  Read: 'read',
+  Updated: 'updated',
 };
 
 module.exports.STATUS = {
   User: {
-    Active: "active",
-    Inactive: "inactive",
+    Active: 'active',
+    Inactive: 'inactive',
   },
   Book: {
-    reading: "reading",
-    complete: "complete",
-    inQueue: "inQueue"
+    reading: 'reading',
+    complete: 'complete',
+    inQueue: 'inQueue'
   }
 };
 
 module.exports.ROLES = {
-  admin: "admin",
-  reader: "reader",
+  admin: 'admin',
+  reader: 'reader',
 };
