@@ -21,8 +21,8 @@
       </v-row>
       <v-row class="mt-8 justify-center">
         <v-card width="35%" color="#EFEBE9" elevation="7">
-          <v-form ref="signInForm" valid="validForm">
-            <v-row class="d-flex align-center">
+          <v-form ref="signInForm" v-model="validForm">
+            <v-row class="d-flex align-center" fill>
               <v-col class="text-center pt-6" cols="12">
                 <h3
                   class="font-italic"
@@ -32,18 +32,18 @@
                 </h3>
               </v-col>
             </v-row>
-            <v-col cols="12" md="12" sm="12" class="pt-2">
+            <v-col cols="12" md="12" sm="12" class="pt-3">
               <v-text-field
-                v-model="user.email"
+                v-model="loginUser.email"
                 placeholder="Enter Email"
                 outlined
                 label="Email"
                 :rules="[rules.required, rules.email]"
               />
             </v-col>
-            <v-col cols="12" md="12" sm="12" class="py-0 pt-0">
+            <v-col cols="12" md="12" sm="12" class="py-0">
               <v-text-field
-                v-model="user.password"
+                v-model="loginUser.password"
                 placeholder="Enter Password"
                 outlined
                 label="Password"
@@ -54,10 +54,14 @@
               />
             </v-col>
             <v-col cols="12" md="12" sm="12" class="pa-0 text-end">
-              <u class="ma-3">Forgot Password? Click Here</u>
+              <a :href="$router.push(`/dashboard`)" class="ma-3">Forgot Password? Click Here</a>
             </v-col>
             <v-col cols="12" md="12" sm="12" class="text-end">
-              <v-btn color="#DABDAB" @click="onClick">Sign In</v-btn>
+              <v-btn 
+                color="#DABDAB" 
+                @click="onClick"
+                :disabled="!validForm"
+              >Sign In</v-btn>
             </v-col>
             <v-row class="d-flex align-center">
               <v-col class="text-end" cols="6">Did not register yet?</v-col>
@@ -76,7 +80,6 @@
             </v-row>
           </v-form>
         </v-card>
-        <br>
       </v-row>
     </v-container>
     <v-dialog
@@ -101,8 +104,10 @@
     </v-footer>
   </v-app>
 </template>
+
 <script>
-import ModalSignUp from "./ModalSignUp.vue";
+import ModalSignUp from "../components/ModalSignUp.vue";
+import { mapState, mapActions } from 'vuex';
 
 export default {
   name: "Home-Page",
@@ -112,8 +117,10 @@ export default {
   },
 
   data: () => ({
+    validForm: false,
+    visible: false,
     dialog: false,
-    user: {
+    loginUser: {
       email: "",
       password: "",
     },
@@ -123,12 +130,16 @@ export default {
       email: (v) => /.+@.+\..+/.test(v) || "E-mail must be valid",
     },
   }),
+  computed: {
+    ...mapState('global', ['user'])
+  },
   methods: {
+    ...mapActions('global', ['login', 'fetchLoggedInUser']),
     async onClick() {
-      const { valid } = await this.$refs.signInForm.validate();
-      if (valid) {
-        alert("Form is valid");
-      }
+      // const { valid } = await this.$refs.signInForm.validate();
+      await this.login(this.loginUser);
+      this.$router.push('/dashboard');
+      console.log(this.user);
     },
   },
 };
@@ -138,10 +149,5 @@ export default {
   background: url("../assets/background_new.svg");
   background-size: 100%;
   height: 100%;
-}
-
-.dialog {
-  align-items: center;
-  color: blue;
 }
 </style>

@@ -2,14 +2,18 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import VueIziToast from 'vue-izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
+import axios from 'axios';
 
 import App from './App.vue';
 import vuetify from './plugins/vuetify';
 import routes from './routes';
-// import store from './store';
+import store from './store';
+// import axiosInterceptor from './interceptor';
 // import pageTitleMixin from './mixins/pageTitleMixin';
 
 Vue.config.productionTip = false;
+
+axios.defaults.baseURL = process.env.VUE_APP_SERVER_URL;
 
 // Vue Router Documentation https://v3.router.vuejs.org/installation.html#npm
 const router = new VueRouter({
@@ -50,6 +54,6 @@ Vue.use(VueRouter);
 new Vue({
   vuetify,
   router,
-  // store,
+  store,
   render: (h) => h(App),
 }).$mount('#app');
