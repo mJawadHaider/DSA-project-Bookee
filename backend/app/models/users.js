@@ -51,6 +51,9 @@ module.exports = function (sequelize, DataTypes) {
         values: [ROLES.admin, ROLES.reader],
         ...getSetMethods.call(this, "role"),
       },
+      friends: {
+        type: STRING,
+      },
       /* ================== Virtual Keys ================== */
       isAdmin: {
         type: VIRTUAL,

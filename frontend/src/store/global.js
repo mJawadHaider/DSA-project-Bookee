@@ -1,14 +1,15 @@
 import axios from 'axios';
-import {uniqBy, map, flatMap, sumBy} from 'lodash';
+// import {uniqBy, map, flatMap, sumBy} from 'lodash';
+/* eslint-disable */
 
 export const state = () => ({
   user: null,
   books: [],
-  isLoadingData: {
-    employees: true,
-    activities: false,
-    previewPdf: true,
-  },
+  // isLoadingData: {
+  //   employees: true,
+  //   activities: false,
+  //   previewPdf: true,
+  // },
 });
 
 export const mutations = {
@@ -49,7 +50,7 @@ export const mutations = {
 export const actions = {
   async login({commit}, payload) {
     const response = await axios.post('/login', payload);
-    commit('SET_USER', response.data);
+    commit('SET_USER', response.data.data);
   },
 
   async fetchLoggedInUser({commit}, forceRefresh = false) {
@@ -58,13 +59,14 @@ export const actions = {
     }
     const response = await axios.get('/me');
     commit('SET_LOGGED_IN_USER', response.data);
+    return response.data;
   },
   //==================================== Books Actions
   async fetchAllBooks({commit, state}, forceRefresh = false) {
     if (!forceRefresh && state.books.length) {
       return;
     }
-    const response = await axios.get('/admin/books');
+    const response = await axios.get('/books');
     commit('SET_BOOKS_LIST', response.dataItems);
   },
 
@@ -73,14 +75,14 @@ export const actions = {
     commit('UPDATE_BOOK', response.data);
   },
 
-  async getBook({commit}, id) {
+  async getBook({}, id) {
     const response = await axios.get(`/admin/books/${id}`);
     return response.data;
   },
 
   async createBook({commit, state}, book) {
     // commit('SET_IS_CREATING_PROJECT', true);
-    const response = await axios.post('/admin/books', project);
+    const response = await axios.post('/admin/books', book);
 
     commit('SET_BOOKS_LIST', [response.data, ...state.books]);
     // commit('SET_IS_CREATING_PROJECT', false);
