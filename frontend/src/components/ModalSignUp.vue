@@ -1,6 +1,6 @@
 <template>
     <v-form ref="signInForm" valid="validForm">
-        <v-row class="pt-6 justify-center">
+        <v-row class="pt-6 ma-0 justify-center">
             <v-col class="text-center pt-6" cols="12" md="12" sm="12">
             <h3 class="font-italic" style="background-color:saddlebrown; color:white;">
              SIGN UP
@@ -28,7 +28,7 @@
                 :rules="[rules.required, rules.maxlength]" required />
             </v-col>
             <v-col cols="10" md="10" sm="10" class="mb-3 text-end">
-                <v-btn color="#DABDAB" @click="onClick" :disabled="$refs.signInForm">Sign Up</v-btn>
+                <v-btn color="#DABDAB" @click="onClick                                                                                                              ">Sign Up</v-btn>
             </v-col>
         </v-row>
     </v-form>
