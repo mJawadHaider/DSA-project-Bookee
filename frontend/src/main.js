@@ -22,16 +22,41 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  if (to.matched.some((rec) => !rec.meta.authNotRequired)) {
-    if (localStorage.getItem('token')) return next();
-    return next({name: 'login'});
-  } else if (to.matched.every((rec) => rec.meta.authNotRequired)) {
-    if (localStorage.getItem('token'))
-      return next({name: from.name || 'dashboard'});
-    return next();
+  const token = localStorage.getItem('token');
+  let user = JSON.parse(localStorage.getItem('user') || '{}');
+
+  if (to.name === 'login') {
+      return next();
+  }
+  if (
+    to.matched.every((rec) => {
+      const roles = rec.meta.roles || [];
+      return !roles.includes('all') && !roles.includes(user.role);
+    })
+  ) {
+      return next({ name: 'login' });
   }
   next();
 });
+
+// router.beforeEach((to, from, next) => {
+//   const token = localStorage.getItem('token');
+//   const user = (localStorage.getItem('user') || {});
+
+//   if (to.name === 'login') {
+//     return next();
+//   }
+
+//   if (to.matched.some((rec) => !rec.meta.authNotRequired)) {
+//     if (token) return next();
+//     return next({name: 'login'});
+//   } else if (to.matched.every((rec) => rec.meta.authNotRequired)) {
+//     if (token)
+//       return next({name: from.name || 'dashboard'});
+//     return next();
+//   }
+//   next();
+// });
 
 Vue.config.errorHandler = (err, vm, ) => {
   // err: error trace
@@ -45,7 +70,7 @@ Vue.config.errorHandler = (err, vm, ) => {
 
 
 const options = {
-  position: 'topRight',
+  position: 'topCenter',
 };
 Vue.use(VueIziToast, options);
 

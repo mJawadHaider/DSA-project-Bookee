@@ -1,7 +1,7 @@
 <template>
-  <v-form ref="signInForm" v-model="validForm">
-    <v-row class="pt-6 ma-0 justify-center">
-      <v-col class="text-center pt-6" cols="12" md="12" sm="12">
+  <v-form ref="signUnForm" v-model="validForm">
+    <v-row class="pt-2 ma-0 justify-center">
+      <v-col class="text-center px-0 pt-6" cols="12" md="12" sm="12">
         <h3
           class="font-italic"
           style="background-color: saddlebrown; color: white"
@@ -9,7 +9,7 @@
           SIGN UP
         </h3>
       </v-col>
-      <v-col cols="5" md="5" sm="5" class="pb-0 white">
+      <v-col cols="6" md="6" sm="6" class="pb-0 white">
         <v-text-field
           v-model="user.firstName"
           placeholder="Enter First Name"
@@ -19,7 +19,7 @@
           required
         />
       </v-col>
-      <v-col cols="5" md="5" sm="5" class="pb-0 white">
+      <v-col cols="6" md="6" sm="6" class="pb-0 white">
         <v-text-field
           v-model="user.lastName"
           placeholder="Enter Last Name"
@@ -27,7 +27,7 @@
           label="Last Name"
         />
       </v-col>
-      <v-col cols="10" md="10" sm="10" class="py-0 white">
+      <v-col cols="12" md="12" sm="12" class="py-0 white">
         <v-text-field
           v-model="user.email"
           placeholder="Enter Email"
@@ -37,7 +37,7 @@
           required
         />
       </v-col>
-      <v-col cols="10" md="10" sm="10" class="py-0">
+      <v-col cols="12" md="12" sm="12" class="py-0">
         <v-text-field
           v-model="user.password"
           placeholder="Enter Password"
@@ -50,27 +50,26 @@
           required
         />
       </v-col>
-      <v-col cols="10" md="10" sm="10" class="mb-3 text-end">
-        <v-btn color="#DABDAB" @click="onClick" :disabled="!validForm">Sign Up</v-btn>
-      </v-col>
+      <v-row class="text-end mr-6 mb-0">
+        <v-col cols="12" md="12" sm="12" class="mb-3 d-flex justify-end">
+          <v-btn class="mr-1" color="#DABDAB" @click="onClose">Close</v-btn>
+          <v-btn class="ml-3" color="#DABDAB" @click="onSubmit" :disabled="!validForm">Sign Up</v-btn>
+        </v-col>
+      </v-row>
     </v-row>
   </v-form>
 </template>
 <script>
+import { mapActions, mapState } from 'vuex';
+
 export default {
   name: "ModalSignUp",
-
-  components: {},
-
+  props: {
+    user: Object,
+  },
   data: () => ({
     validForm: false,
     visible: false,
-    user: {
-      firstName: "",
-      lastName: "",
-      email: "",
-      password: "",
-    },
     rules: {
       required: (a) => !!a || "This field is required",
       maxlength: (a) => a.length >= 8 || "Minimum 8 characters are required",
@@ -78,11 +77,13 @@ export default {
     },
   }),
   methods: {
-    async onClick() {
-      const { valid } = await this.$refs.signInForm.validate();
-      if (valid) {
-        alert("Form is valid");
-      }
+    ...mapActions('global', ['signUp']),
+    async onSubmit() {
+      await this.signUp(this.user);
+      this.onClose();
+    },
+    onClose() {
+      this.$emit('onClose');
     },
   },
 };

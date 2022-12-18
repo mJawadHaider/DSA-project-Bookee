@@ -1,14 +1,22 @@
+
+import { ROLES } from './enums';
 import LoginPage from './pages/LoginPage';
 import DashboardPage from './pages/DashboardPage';
 import LayoutPage from './pages/LayoutPage';
+import MyBooksList from './components/MyBooksList';
 
 export default [
+  {
+    path: '*',
+    redirect: '/login',
+  },
   {
     path: '/login',
     component: LoginPage,
     name: 'login',
     meta: {
       authNotRequired: true,
+      roles: [ROLES.all],
       pageTitle: 'Login Page'
     },
   },
@@ -18,6 +26,7 @@ export default [
     name: 'index',
     meta: {
       pageTitle: 'Bookee',
+      roles: [ROLES.admin, ROLES.reader],
     },
     children: [
       {
@@ -25,7 +34,17 @@ export default [
         component: DashboardPage,
         name: 'dashboard',
         meta: {
-          pageTitle: 'Dashboard'
+          pageTitle: 'Dashboard',
+          roles: [ROLES.admin, ROLES.reader],
+        },
+      },
+      {
+        path: 'my-books',
+        component: MyBooksList,
+        name: 'MyBooksList',
+        meta: {
+          pageTitle: 'My Books',
+          roles: [ROLES.admin, ROLES.reader],
         },
       },
       // {
@@ -70,22 +89,6 @@ export default [
       //       },
       //     },
       //   ],
-      // },
-      // {
-      //   path: 'employees',
-      //   component: EmployeeListPage,
-      //   name: 'all-employee',
-      //   meta: {
-      //     pageTitle: 'Employees List'
-      //   },
-      // },
-      // {
-      //   path: 'records',
-      //   component: ActivitiesListPage,
-      //   name: 'all-activities',
-      //   meta: {
-      //     pageTitle: 'Records List'
-      //   },
       // },
       {
         path: '*',

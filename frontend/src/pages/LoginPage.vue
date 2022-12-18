@@ -47,9 +47,9 @@
                 placeholder="Enter Password"
                 outlined
                 label="Password"
-                :append-icon="visible ? 'mdi-eye' : 'mdi-eye-off'"
-                :type="visible ? 'text' : 'password'"
-                @click:append="visible = !visible"
+                :append-icon="togglePasswordIcon ? 'mdi-eye' : 'mdi-eye-off'"
+                :type="togglePasswordIcon ? 'text' : 'password'"
+                @click:append="togglePasswordIcon = !togglePasswordIcon"
                 :rules="[rules.required, rules.maxlength]"
               />
             </v-col>
@@ -72,7 +72,7 @@
                   class="ml-0"
                   size="small"
                   :scrollable="false"
-                  @click="dialog = true"
+                  @click="signUpDialog = true"
                 >
                   Register Now
                 </v-btn>
@@ -83,12 +83,17 @@
       </v-row>
     </v-container>
     <v-dialog
-      v-model="dialog"
-      max-width="700px"
+      v-model="signUpDialog"
+      max-width="600px"
+      persistent
       transition="dialog-bottom-transition"
     >
       <v-card>
-        <modal-sign-up />
+        <ModalSignUp 
+          ref="modalSignUp"
+          :user="newUser"
+          @onClose="onModalClose" 
+        />
       </v-card>
     </v-dialog>
 
@@ -118,11 +123,17 @@ export default {
 
   data: () => ({
     validForm: false,
-    visible: false,
-    dialog: false,
+    togglePasswordIcon: false,
+    signUpDialog: false,
     loginUser: {
-      email: "",
-      password: "",
+      email: "admin@gmail.com",
+      password: "sajjad734",
+    },
+    newUser: {
+      email: '',
+      password: '',
+      firstName: '',
+      lastName: '',
     },
     rules: {
       required: (a) => !!a || "This field is required",
@@ -137,9 +148,23 @@ export default {
     ...mapActions('global', ['login', 'fetchLoggedInUser']),
     async onClick() {
       // const { valid } = await this.$refs.signInForm.validate();
-      await this.login(this.loginUser);
-      this.$router.push('/dashboard');
-      console.log(this.user);
+      try {
+        await this.login(this.loginUser);
+      } catch(e) {
+        this.$toast.error('Invalid Email or Password');
+      }
+      this.$router.push('/dashboard').catch(() => {});
+      this.$toast.success('Welcome. Happy Reading!')
+    },
+    onModalClose() {
+      this.$refs.modalSignUp.$refs.signUnForm.resetValidation();
+      this.signUpDialog = false;
+      this.newUser = {
+        email: '',
+        password: '',
+        firstName: '',
+        lastName: '',
+      };
     },
   },
 };

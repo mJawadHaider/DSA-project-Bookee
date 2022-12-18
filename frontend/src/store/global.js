@@ -15,7 +15,9 @@ export const state = () => ({
 export const mutations = {
   SET_USER(state, payload) {
     state.user = payload.user;
+    console.log('user', payload);
     localStorage.setItem('token', payload.token);
+    localStorage.setItem('user', JSON.stringify(payload.user));
   },
 
   SET_LOGGED_IN_USER(state, payload) {
@@ -51,6 +53,11 @@ export const actions = {
   async login({commit}, payload) {
     const response = await axios.post('/login', payload);
     commit('SET_USER', response.data.data);
+  },
+
+  async signUp({commit}, payload) {
+    const response = await axios.post('/signup', payload);
+    return response;
   },
 
   async fetchLoggedInUser({commit}, forceRefresh = false) {

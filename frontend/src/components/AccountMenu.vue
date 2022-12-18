@@ -2,8 +2,8 @@
   <v-menu bottom min-width="200px" rounded offset-y>
     <template v-slot:activator="{ on }">
       <v-btn icon x-large v-on="on">
-        <v-avatar color="grey lighten-2" size="48">
-          <v-icon>
+        <v-avatar color="brown" size="45">
+          <v-icon color="#DABDAB" dark>
             mdi-account-circle
           </v-icon>
         </v-avatar>
@@ -12,8 +12,8 @@
     <v-card>
       <v-list-item-content class="justify-center">
         <div class="mx-auto text-center">
-          <v-avatar color="grey lighten-2" size="48">
-            <v-icon>
+          <v-avatar color="#DABDAB" size="50">
+            <v-icon color="brown" large dark>
               mdi-account-circle
             </v-icon>
           </v-avatar>
