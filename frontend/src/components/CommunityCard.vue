@@ -148,7 +148,7 @@ export default {
 				msg = 'is reading the book: ';
 			} else if (this.community.isComplete) {
 				msg = 'has read the book: ';
-			} else {
+			} else if (this.community.inQueue) {
 				msg = 'has liked the book: ';
 			}
 			return msg;

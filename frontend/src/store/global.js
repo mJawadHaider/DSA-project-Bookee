@@ -107,40 +107,33 @@ export const actions = {
 		return response;
 	},
 
-	async fetchUsersList({ commit, state }) {
+	async fetchUsersData({ commit, state }, onAppStart = true) {
 		const response = await axios.get(`/all-users`);
 		let users = response.data.dataItems;
-		users = users
-			.map((user) => {
-				const id = '' + user.id;
-				if (+user.id === +state.user.id || state.user.friends?.includes(id)) {
-					return undefined;
+		if (onAppStart) {
+			users.forEach((user) => {
+				commit('SET_NEW_USER_IN_GRAPH', user);
+				if (user.friendsList?.length) {
+					user.friendsList.forEach((friend) => {
+						UsersGraph.addFriends(user, friend);
+					});
 				}
-				const initials =
-					`${user.firstName[0]}${user.lastName[0]}`.toUpperCase();
-				const fullName = convertFullName(user.firstName, user.lastName);
-				return {
-					...user,
-					initials,
-					fullName,
-				};
-			})
-			.filter((u) => !!u);
+			});
+			UsersGraph.printGraph();
+		} else {
+			users = users
+				.map((user) => {
+					if (
+						+user.id === +state.user.id ||
+						state.user.friends?.includes(user.id)
+					) {
+						return null;
+					}
+					return user;
+				})
+				.filter((u) => !!u);
+		}
 		commit('SET_ALL_USERS', users);
-	},
-
-	async fetchUsersData({ commit }) {
-		const response = await axios.get(`/all-users`);
-		const users = response.data.dataItems;
-		commit('SET_ALL_USERS', users);
-		users.forEach((user) => {
-			commit('SET_NEW_USER_IN_GRAPH', user);
-			if (user.friendsList.length) {
-				user.friendsList.forEach((friend) => {
-					UsersGraph.addFriends(user, friend);
-				});
-			}
-		});
 		return users;
 	},
 

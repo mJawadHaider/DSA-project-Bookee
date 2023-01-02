@@ -58,7 +58,7 @@ export default {
 			'removeFriend',
 			'addUserBook',
 			'addNewFriend',
-			'fetchUsersList',
+			'fetchUsersData',
 		]),
 		async unfollowFriend(data) {
 			await this.removeFriend(data);
@@ -99,6 +99,7 @@ export default {
 				await this.addUserBook(data);
 				const response = 'Book Added to ' + data.status.toUpperCase();
 				this.$toast.success(response);
+				this.fetchCommunity();
 			} catch (e) {
 				this.$toast.error('Book Already Added');
 			}
@@ -107,7 +108,7 @@ export default {
 			const user = await this.getMe();
 			await this.fetchCommunity();
 			await this.getAllFriends(user.id);
-			await this.fetchUsersList();
+			await this.fetchUsersData(false);
 		},
 	},
 	async created() {

@@ -69,24 +69,27 @@ module.exports = (router) => {
       // console.log(rows);
       // console.log("====================================");
       const users = rows.map((obj, index, self) => {
-        let user = obj.dataValues;
-        // console.log(user, "user");
-        user = {
-          ...user,
+        // let user = obj.dataValues;
+        // let user = {
+        //   ...obj,
+        //   friendsList: [],
+        // };
+        obj.dataValues = {
+          ...obj.dataValues,
           friendsList: [],
         };
         self.forEach((e) => {
           const u = e.dataValues;
-          if (user.friends && user.friends.includes(u.id)) {
-            user.friendsList.push(u);
+          if (obj.dataValues.friends && obj.dataValues.friends.includes(u.id)) {
+            obj.dataValues.friendsList.push(u);
           }
         });
-        return user;
+        return obj;
       });
 
-      // console.log("====================================");
-      // console.log(users);
-      // console.log("====================================");
+      console.log("====================================");
+      console.log(users);
+      console.log("====================================");
 
       res.http200(users, { count: count });
     })
@@ -195,8 +198,7 @@ module.exports = (router) => {
           },
         ],
       });
-      const community = rows.map((obj) => obj.dataValues);
-      return res.http200(community, {
+      return res.http200(rows, {
         count: count,
       });
     })
