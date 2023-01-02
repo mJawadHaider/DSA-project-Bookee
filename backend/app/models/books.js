@@ -1,5 +1,5 @@
 module.exports = function (sequelize, DataTypes) {
-  const { STRING, INTEGER, FLOAT } = DataTypes;
+  const { STRING, TEXT, INTEGER, FLOAT } = DataTypes;
   const Books = sequelize.$$defineModel("Books", {
     name: {
       type: STRING,
@@ -9,7 +9,7 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: false,
     },
     description: {
-      type: STRING,
+      type: TEXT,
     },
     image: {
       type: STRING,

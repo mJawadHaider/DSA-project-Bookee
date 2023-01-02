@@ -9,7 +9,7 @@ const { extend } = require("lodash");
 const env = process.env.NODE_ENV || "development";
 const config = {
   username: "root",
-  password: "",
+  password: "root",
   database: "bookee",
   host: "localhost",
   dialect: "mysql",
