@@ -70,9 +70,10 @@ module.exports = function (sequelize, DataTypes) {
       initials: {
         type: VIRTUAL,
         get: function () {
+          const lastName = this.getDataValue("lastName");
           return upperCase(
             `${this.getDataValue("firstName")[0]}${
-              this.getDataValue("lastName")[0]
+              lastName ? `${lastName[0]}` : ""
             }`
           );
         },

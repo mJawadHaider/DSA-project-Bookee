@@ -1,5 +1,5 @@
 module.exports = function (sequelize, DataTypes) {
-  const { STRING, INTEGER, DECIMAL } = DataTypes;
+  const { STRING, INTEGER, FLOAT } = DataTypes;
   const Books = sequelize.$$defineModel("Books", {
     name: {
       type: STRING,
@@ -11,11 +11,14 @@ module.exports = function (sequelize, DataTypes) {
     description: {
       type: STRING,
     },
+    image: {
+      type: STRING,
+    },
     comments: {
       type: STRING,
     },
-    ratings: {
-      type: DECIMAL,
+    rating: {
+      type: FLOAT,
     },
     genre: {
       type: STRING,

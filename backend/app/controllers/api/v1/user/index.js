@@ -110,9 +110,10 @@ module.exports = (router) => {
   .put(
     asyncMiddleware(async (req, res) => {
       const request = req.body;
-      const userBook = await UserBooks.$$findOne({ 
+      const userBook = await UserBooks.$$findOne({
         userId: request.userId, 
-        bookId: request.bookId 
+        bookId: request.bookId,
+        status: request.status,
       });
       req.userBook = userBook;
       const updatedbook = await req.userBook.update(req.body);
@@ -120,5 +121,18 @@ module.exports = (router) => {
     })
   )
 
-  // router.route("/user-books/:userId")
+  router.get (
+    "/current-book/:userId",
+    asyncMiddleware(async (req, res) => {
+      const book = await UserBooks.$$findOne({
+        query: {
+          where: {
+            userId,
+          }
+        },
+      });
+      console.log('books ', book);
+      res.http200(book);
+    })
+  );
 };

@@ -3,11 +3,11 @@
 		<v-row>
 			<v-col cols="12">
 				<v-app-bar app color="#DABDAB" elevation="3" flat>
-          <a href="/dashboard"> 
+          <a href="/home"> 
             <v-img 
               src="../assets/logo.svg" 
               width="120px"
-              to="/dashboard"
+              to="/home"
             /> 
           </a>
           <v-app-bar-title @click="onTitleClick">Bookee - Let's Read</v-app-bar-title>
@@ -24,7 +24,7 @@
             </v-tab>
 					</v-tabs>
           <div class="mr-11">
-            <AccountMenu v-if="user" :user="user" @logout="onLogout"/>
+            <AccountMenu v-if="currentUser" :user="currentUser" @logout="onLogout"/>
           </div>
 				</v-app-bar>
 			</v-col>
@@ -34,35 +34,40 @@
 
 <script>
 import AccountMenu from './AccountMenu.vue';
+import { mapActions, mapState } from 'vuex';
 
 export default {
     name: 'ModalSignUp',
-
     components: {
       AccountMenu,
     },
-
     data: () => ({
+        searchQuery: '',
         tabs: [
           {title:"Home", path:"/home"},
-					{title:"Friends", path:"/friends"},
+					{title:"Community", path:"/community"},
 					{title:"My Books", path:"/my-books"},  
 				],
-        user: {},
     }),
+    computed: {
+      ...mapState('global', ['user']),
+      currentUser() {
+        return this.user;
+      },
+    },
     methods: {
+      ...mapActions('global', ['getMe']),
       onLogout() {
         localStorage.removeItem('token');
         localStorage.removeItem('user');
         this.$router.push('login');
       },
       onTitleClick() {
-        console.log('its hereeeeee');
-        this.$router.push('/dashboard')
+        this.$router.push('/home')
       },
     },
-    mounted() {
-      this.user = JSON.parse(localStorage.getItem('user') || {});
+    async mounted() {
+      await this.getMe();
     },
 	}
 </script>
