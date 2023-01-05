@@ -64,11 +64,6 @@ export default {
 			await this.removeFriend(data);
 			try {
 				this.$toast.success('User UnFollowed');
-				// this.currentUser.friends = this.currentUser.friends.replace(
-				// 	data.friendId,
-				// 	''
-				// );
-				// await this.getAllFriends(this.currentUser.id);
 				await this.fetchData();
 			} catch (e) {
 				this.$toast.error('User Not Found');

@@ -2,7 +2,7 @@
 	<v-app>
 		<v-container class="bg" fluid fill-height>
 			<v-row class="justify-center">
-				<v-col cols="12">
+				<v-col cols="12" md="12" sm="12">
 					<v-img
 						:src="require('../assets/logo.svg')"
 						class="my-3"
@@ -12,7 +12,7 @@
 				</v-col>
 
 				<v-row class="text-center">
-					<v-col cols="12" md="12">
+					<v-col cols="12" md="12" sm="12">
 						<h3 class="font-italic">
 							Welcome to Bookee. Let's read, as reading heals!
 						</h3>
@@ -20,10 +20,14 @@
 				</v-row>
 			</v-row>
 			<v-row class="mt-8 justify-center">
-				<v-card width="35%" color="#EFEBE9" elevation="7">
+				<v-card
+					:width="$vuetify.breakpoint.mobile ? '80%' : '35%'"
+					color="#EFEBE9"
+					elevation="7"
+				>
 					<v-form ref="signInForm" v-model="validForm">
 						<v-row class="d-flex align-center" fill>
-							<v-col class="text-center pt-6" cols="12">
+							<v-col class="text-center pt-6" cols="12" md="12" sm="12">
 								<h3
 									class="font-italic"
 									style="background-color: saddlebrown; color: white"

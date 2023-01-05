@@ -37,7 +37,7 @@
 								UnFollow</v-btn
 							>
 						</v-col>
-						<v-col v-if="friend.book.name" cols="12" class="pl-8 pt-0">
+						<v-col v-if="friend.book?.name" cols="12" class="pl-8 pt-0">
 							Current Book Reading: <i>{{ friend?.book?.name || 'NaN' }}</i>
 						</v-col>
 						<v-col v-else cols="12" class="pl-8 pt-0">

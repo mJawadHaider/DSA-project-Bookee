@@ -37,7 +37,7 @@ class Graph {
 
 	removeFriend(currentUser, friend) {
 		let { user, friends } = this.AdjList.get(currentUser.email);
-		friends = friends.filter((f) => f.id !== friend.id);
+		friends = friends.filter((f) => f.id !== friend.userId);
 		this.AdjList.set(user.email, {
 			user,
 			friends,

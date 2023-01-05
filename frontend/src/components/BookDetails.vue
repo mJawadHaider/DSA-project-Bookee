@@ -2,14 +2,21 @@
 	<v-card elevation="4">
 		<v-row class="align-start px-5 py-2">
 			<v-col class="pa-0 pt-2" :cols="isCurrentBook ? '4' : '3'">
-				<v-img height="200px" contain :src="getImageUrl(`${book.image}`)" />
+				<v-img
+					height="200px"
+					contain
+					:src="getImageUrl(`${book.image || ''}`)"
+				/>
 			</v-col>
 			<v-col class="pa-0 pl-3">
 				<v-row>
-					<v-col class="mb-0 pb-0" cols="12">
+					<v-col class="mb-0 pb-0" cols="10">
 						<slot>
 							<h2>{{ book.name }}</h2>
 						</slot>
+					</v-col>
+					<v-col v-if="!isCurrentBook && user.isAdmin" class="pl-0" cols="2">
+						<v-btn outlined color="brown" @click="editBtnClicked">Edit</v-btn>
 					</v-col>
 					<v-col v-if="!isCurrentBook" class="py-0" cols="12">
 						<b>{{ book.author }}</b> -
@@ -72,7 +79,7 @@
 						:cols="isCurrentBook ? '5' : '7'"
 						:class="isCurrentBook ? 'text-end pb-3 pr-0' : 'text-end pr-0 pt-2'"
 					>
-						<span class="grey--text">({{ book.rating }}) </span>
+						<span class="grey--text">({{ bookRating }}) </span>
 					</v-col>
 					<v-col
 						:class="
@@ -83,7 +90,7 @@
 						:cols="isCurrentBook ? '7' : '5'"
 					>
 						<v-rating
-							v-model="book.rating"
+							v-model="bookRating"
 							color="yellow darken-3"
 							background-color="grey darken-1"
 							half-increments
@@ -109,6 +116,7 @@ export default {
 			{ title: 'Completed', action: STATUS.complete },
 			{ title: 'My Books', action: STATUS.inQueue },
 		],
+		bookRating: 0,
 		selectedBookAction: '',
 	}),
 	props: {
@@ -131,6 +139,10 @@ export default {
 	},
 	methods: {
 		getImageUrl(img) {
+			// console.log(this.book, 'this.book', img);
+			if (!img) {
+				img = 'NoImage.png';
+			}
 			return require('../assets/' + img);
 		},
 		bookActionSelected(item) {
@@ -147,6 +159,12 @@ export default {
 				status: item.action,
 			});
 		},
+		editBtnClicked() {
+			this.$emit('editBtnClicked', this.book);
+		},
+	},
+	mounted() {
+		this.bookRating = this.book.rating || 0.0;
 	},
 };
 </script>

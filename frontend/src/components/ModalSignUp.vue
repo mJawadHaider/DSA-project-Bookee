@@ -98,10 +98,10 @@ export default {
 		...mapActions('global', ['signUp']),
 		async onSubmit() {
 			const user = {
-				firstName,
-				lastName,
-				email,
-				password,
+				firstName: this.firstName,
+				lastName: this.lastName,
+				email: this.email,
+				password: this.password,
 			};
 			await this.signUp(user);
 			this.onClose();

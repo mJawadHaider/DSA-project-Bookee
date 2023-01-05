@@ -30,6 +30,7 @@
 					:booksList="booksList"
 					:searchQuery="searchQuery"
 					@onBookSelection="onBookSelection"
+					@newBookAdded="newBookAdded"
 				/>
 			</v-col>
 			<v-col cols="2">
@@ -66,13 +67,28 @@ export default {
 		},
 	},
 	methods: {
-		...mapActions('global', ['fetchAllBooks', 'getBookReading', 'addUserBook']),
+		...mapActions('global', [
+			'fetchAllBooks',
+			'getBookReading',
+			'addUserBook',
+			'createBook',
+		]),
 		async onBookSelection(data) {
-			await this.addUserBook(data);
 			try {
+				await this.addUserBook(data);
 				const response = 'Book Added to ' + data.status.toUpperCase();
 				this.$toast.success(response);
 				await this.fetchData();
+			} catch (e) {
+				this.$toast.error('Book Already Added');
+			}
+		},
+		async newBookAdded(newBook) {
+			let response = {};
+			try {
+				response = await this.createBook(newBook);
+				await this.fetchAllBooks(true);
+				this.$toast.success('Book Added');
 			} catch (e) {
 				this.$toast.error('Book Already Added');
 			}

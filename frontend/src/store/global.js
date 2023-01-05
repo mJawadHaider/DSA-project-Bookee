@@ -1,8 +1,5 @@
 import axios from 'axios';
-import Vue from 'vue';
-import Vuex from 'vuex';
 import UsersGraph from './Graph';
-// import {uniqBy, map, flatMap, sumBy} from 'lodash';
 /* eslint-disable */
 
 const AuthToken = localStorage.getItem('token');
@@ -167,11 +164,8 @@ export const actions = {
 	},
 
 	async createBook({ commit, state }, book) {
-		// commit('SET_IS_CREATING_PROJECT', true);
 		const response = await axios.post('/admin/books', book);
-
-		commit('SET_BOOKS_LIST', [response.data, ...state.books]);
-		// commit('SET_IS_CREATING_PROJECT', false);
+		return response;
 	},
 
 	//==================================== Friends Calls
@@ -217,7 +211,7 @@ export const actions = {
 		UsersGraph.printGraph();
 		const response = await axios.put(`/remove-friend/${data.user.id}`, {
 			userId: data.user.id,
-			friendId: data.friend.id,
+			friendId: data.friend.userId,
 		});
 		// return response.data.data;
 	},

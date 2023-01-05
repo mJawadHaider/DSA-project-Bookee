@@ -8,8 +8,6 @@ import App from './App.vue';
 import vuetify from './plugins/vuetify';
 import routes from './routes';
 import store from './store';
-// import axiosInterceptor from './interceptor';
-// import pageTitleMixin from './mixins/pageTitleMixin';
 
 Vue.config.productionTip = false;
 
@@ -37,30 +35,10 @@ router.beforeEach((to, from, next) => {
 			return !roles.includes('all') && !roles.includes(user.role);
 		})
 	) {
-		return next({ path: '/login' });
-		// return next({ name: 'login' });
+		return next({ path: '/home' });
 	}
 	next();
 });
-
-// router.beforeEach((to, from, next) => {
-//   const token = localStorage.getItem('token');
-//   const user = (localStorage.getItem('user') || {});
-
-//   if (to.name === 'login') {
-//     return next();
-//   }
-
-//   if (to.matched.some((rec) => !rec.meta.authNotRequired)) {
-//     if (token) return next();
-//     return next({name: 'login'});
-//   } else if (to.matched.every((rec) => rec.meta.authNotRequired)) {
-//     if (token)
-//       return next({name: from.name || 'home'});
-//     return next();
-//   }
-//   next();
-// });
 
 Vue.config.errorHandler = (err, vm) => {
 	// err: error trace

@@ -24,10 +24,10 @@ module.exports = (router) => {
             author: req.body.author,
             description: req.body.description,
             genre: req.body.genre,
-          }
+          },
         });
-        if(record) {
-          return res.http200("Enter Unique Book");
+        if (record) {
+          return res.http500("Enter Unique Book");
         }
         const books = await Books.create(req.body);
         return res.http200(books);
@@ -54,13 +54,8 @@ module.exports = (router) => {
     )
     .put(
       asyncMiddleware(async (req, res) => {
-        const {name, author, description, genre} = req.body;
-        const updatedbook = await req.book.update({
-          name,
-          author,
-          description,
-          genre
-        });
+        const book = req.body;
+        const updatedbook = await req.book.update(book);
         return res.http200(updatedbook);
       })
     )
