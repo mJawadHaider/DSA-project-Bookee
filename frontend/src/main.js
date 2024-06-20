@@ -1,7 +1,7 @@
-import Vue from 'vue';
-import VueRouter from 'vue-router';
-import VueIziToast from 'vue-izitoast';
-import 'izitoast/dist/css/iziToast.min.css';
+import { createApp } from 'vue';
+import { createRouter, createWebHistory } from 'vue-router';
+// import VueIziToast from 'vue-izitoast';
+// import 'izitoast/dist/css/iziToast.min.css';
 import axios from 'axios';
 
 import App from './App.vue';
@@ -9,13 +9,14 @@ import vuetify from './plugins/vuetify';
 import routes from './routes';
 import store from './store';
 
-Vue.config.productionTip = false;
+import * as components from 'vuetify/components';
+import * as directives from 'vuetify/directives';
 
 axios.defaults.baseURL = process.env.VUE_APP_SERVER_URL;
 
 // Vue Router Documentation https://v3.router.vuejs.org/installation.html#npm
-const router = new VueRouter({
-	mode: 'history',
+const router = new createRouter({
+	history: createWebHistory(),
 	routes,
 });
 
@@ -40,28 +41,29 @@ router.beforeEach((to, from, next) => {
 	next();
 });
 
-Vue.config.errorHandler = (err, vm) => {
+const app = createApp(App, {
+	components,
+	directives,
+});
+
+app.config.errorHandler = (err, vm) => {
 	// err: error trace
 	// vm: component in which error occured
 	// info: Vue specific error information such as lifecycle hooks, events etc.
 
 	console.error(err, '<=== Main.js Error Tracking');
-	if (err) vm.$toast.error(err.data.error?.body || err.data.error);
+	if (err) vm.$toast?.error(err.message || err);
 };
 
 const options = {
 	position: 'topCenter',
 };
-Vue.use(VueIziToast, options);
+// app.use(VueIziToast, options);
 
-Vue.use(VueRouter);
-// Vue.mixin(pageTitleMixin);
+app.use(router);
+app.use(vuetify);
+app.use(store);
 
 Promise.all([store.dispatch('fetchUsersData')]).then((res) => {
-	new Vue({
-		vuetify,
-		router,
-		store,
-		render: (h) => h(App),
-	}).$mount('#app');
+	app.mount('#app');
 });

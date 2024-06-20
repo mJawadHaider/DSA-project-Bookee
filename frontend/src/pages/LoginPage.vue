@@ -21,7 +21,7 @@
 			</v-row>
 			<v-row class="mt-8 justify-center">
 				<v-card
-					:width="$vuetify.breakpoint.mobile ? '80%' : '35%'"
+					:width="$vuetify.display.xs ? '80%' : '35%'"
 					color="#EFEBE9"
 					elevation="7"
 				>

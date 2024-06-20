@@ -7,7 +7,7 @@ import CommunityPage from './pages/CommunityPage';
 
 export default [
 	{
-		path: '*',
+		path: '/:pathMatch(.*)*',
 		redirect: '/home',
 	},
 	{
