@@ -1,16 +1,20 @@
 // src/plugins/vuetify.js
 
-import Vue from 'vue'
-import Vuetify from 'vuetify'
-import 'vuetify/dist/vuetify.min.css'
-import '@mdi/font/css/materialdesignicons.css'
+import { createVuetify } from 'vuetify';
+import 'vuetify/dist/vuetify.min.css';
+import '@mdi/font/css/materialdesignicons.css';
 
-Vue.use(Vuetify)
+import * as components from 'vuetify/components';
+import * as directives from 'vuetify/directives';
 
-const opts = {}
-
-export default new Vuetify({
+const vuetify = createVuetify({
+  components: {
+    ...components,
+  },
+  directives,
   icons: {
-    iconfont: 'mdi', // default - only for display purposes
+    defaultSet: 'mdi',
   },
 });
+
+export default vuetify;
